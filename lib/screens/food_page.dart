@@ -146,7 +146,7 @@ class _FoodPageState extends State<FoodPage> {
                           right: 5,
                           bottom: 0,
                           child: IconButton(
-                            icon: const Icon(Icons.favorite_border,
+                            icon: const Icon(Icons.add_shopping_cart,
                                 color: Colors.black),
                             onPressed: () {},
                           ),
