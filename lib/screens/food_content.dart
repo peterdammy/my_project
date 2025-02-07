@@ -94,13 +94,62 @@ class _FoodContentState extends State<FoodContent> {
                     textAlign: TextAlign.start,
                   ),
                   const SizedBox(height: 15),
-                  const Text(
-                    '#3000.00',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w300,
-                      fontSize: 24,
-                    ),
-                    textAlign: TextAlign.start,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        '#3000.00',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w300,
+                          fontSize: 24,
+                        ),
+                        textAlign: TextAlign.start,
+                      ),
+                      Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Container(
+                                height: 30,
+                                width: 30,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(4),
+                                  color: Colors.blueGrey,
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: FittedBox(
+                                    fit: BoxFit.contain,
+                                    child: IconButton(
+                                      icon: Icon(Icons.remove),
+                                      onPressed: () {},
+                                    ),
+                                  ),
+                                )),
+                            const SizedBox(width: 10),
+                            Text('1'),
+                            const SizedBox(width: 10),
+                            Container(
+                                height: 30,
+                                width: 30,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(4),
+                                  color: Colors.blueGrey,
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: FittedBox(
+                                    fit: BoxFit.contain,
+                                    child: IconButton(
+                                      icon: Icon(Icons.add),
+                                      onPressed: () {},
+                                    ),
+                                  ),
+                                )),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                   const Spacer(),
 
