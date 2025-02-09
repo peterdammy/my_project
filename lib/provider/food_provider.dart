@@ -1,3 +1,4 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_project/model/food_model.dart';
 
 final List<FoodModel> allFoodContent = [
@@ -26,3 +27,7 @@ final List<FoodModel> allFoodContent = [
       price: '3300.00',
       image: 'assets/image4.jpg'),
 ];
+
+final foodProvider = Provider((ref) {
+  return allFoodContent;
+});

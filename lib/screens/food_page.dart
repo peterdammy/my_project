@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:my_project/provider/food_provider.dart';
 import 'package:my_project/screens/food_content.dart';
 
-class FoodPage extends StatefulWidget {
+class FoodPage extends ConsumerStatefulWidget {
   const FoodPage({super.key});
 
   @override
-  State<FoodPage> createState() => _FoodPageState();
+  ConsumerState<FoodPage> createState() => _FoodPageState();
 }
 
-class _FoodPageState extends State<FoodPage> {
+class _FoodPageState extends ConsumerState<FoodPage> {
   @override
   Widget build(BuildContext context) {
+    final foodContent = ref.watch(foodProvider);
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: Theme.of(context).primaryColor,
@@ -67,7 +70,7 @@ class _FoodPageState extends State<FoodPage> {
             const SizedBox(height: 12),
             Expanded(
               child: GridView.builder(
-                  itemCount: 4,
+                  itemCount: foodContent.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 12,
@@ -108,30 +111,30 @@ class _FoodPageState extends State<FoodPage> {
                                   child: Container(
                                     height: 82,
                                     width: double.infinity,
-                                    decoration: const BoxDecoration(
+                                    decoration: BoxDecoration(
                                       image: DecorationImage(
                                         fit: BoxFit.cover,
-                                        image:
-                                            AssetImage('assets/pngimage1.png'),
+                                        image: AssetImage(
+                                            foodContent[index].image),
                                       ),
                                     ),
                                   ),
                                 ),
                                 const SizedBox(height: 5),
-                                const FittedBox(
+                                FittedBox(
                                   fit: BoxFit.scaleDown,
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        'Rice and Chicken Stew',
-                                        style: TextStyle(
+                                        foodContent[index].title,
+                                        style: const TextStyle(
                                             color: Colors.black,
                                             fontWeight: FontWeight.bold),
                                       ),
                                       Text(
-                                        '#3000',
+                                        '#${foodContent[index].price}',
                                         style: TextStyle(color: Colors.black),
                                       ),
                                     ],
