@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_project/screens/cart_page.dart';
+import 'package:my_project/screens/favorite_page.dart';
 import 'package:my_project/screens/food_page.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -63,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
         controller: pageController,
         children: const [
           FoodPage(),
-          CartPage(),
+          FavoritePage(),
         ],
       ),
     );

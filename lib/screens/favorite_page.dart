@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class CartPage extends StatefulWidget {
-  const CartPage({super.key});
+class FavoritePage extends StatefulWidget {
+  const FavoritePage({super.key});
 
   @override
-  State<CartPage> createState() => _CartPageState();
+  State<FavoritePage> createState() => _FavoritePageState();
 }
 
-class _CartPageState extends State<CartPage> {
+class _FavoritePageState extends State<FavoritePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
