@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:my_project/provider/fav_provider.dart';
 import 'package:my_project/provider/food_provider.dart';
 import 'package:my_project/screens/food_content.dart';
 
@@ -14,6 +15,8 @@ class _FoodPageState extends ConsumerState<FoodPage> {
   @override
   Widget build(BuildContext context) {
     final foodContent = ref.watch(foodProvider);
+    final favContent = ref.watch(favNotifierProvider);
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: Theme.of(context).primaryColor,
@@ -145,15 +148,26 @@ class _FoodPageState extends ConsumerState<FoodPage> {
                             ),
                           ),
                         ),
-                        Positioned(
-                          right: 5,
-                          bottom: 0,
-                          child: IconButton(
-                            icon: const Icon(Icons.add_shopping_cart,
-                                color: Colors.black),
-                            onPressed: () {},
+                        if (favContent.contains(foodContent[index]))
+                          Positioned(
+                            right: 5,
+                            bottom: 0,
+                            child: IconButton(
+                              icon: const Icon(Icons.add_shopping_cart,
+                                  color: Colors.black),
+                              onPressed: () {},
+                            ),
                           ),
-                        ),
+                        if (!favContent.contains(foodContent[index]))
+                          Positioned(
+                            right: 5,
+                            bottom: 0,
+                            child: IconButton(
+                              icon: const Icon(Icons.favorite,
+                                  color: Colors.black),
+                              onPressed: () {},
+                            ),
+                          ),
                       ],
                     );
                   }),
