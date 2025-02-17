@@ -22,7 +22,7 @@ final List<FoodModel> allFoodContent = [
       image: 'assets/image3.jpg'),
   FoodModel(
       id: '4',
-      title: 'Tradditional Rice',
+      title: 'Traditional Rice',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, ',
       price: '3300.00',
       image: 'assets/image4.jpg'),

@@ -65,144 +65,138 @@ class _FoodContentState extends ConsumerState<FoodContent> {
           ),
 
           // Ensure the text content starts from the beginning
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 14.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start, // Align left
-                children: extraFoodContent.map((food) {
-                  return Column(
-                    children: [
-                      const SizedBox(height: 15), // Spacing after image
-                      Text(
-                        food.title,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 24,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 14.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start, // Align left
+              children: extraFoodContent.map((food) {
+                return Column(
+                  children: [
+                    const SizedBox(height: 15), // Spacing after image
+                    Text(
+                      food.title,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24,
+                      ),
+                      textAlign: TextAlign.start,
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      food.description,
+                    ),
+                    const SizedBox(height: 10),
+                    const Text(
+                      'Price:',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w800,
+                        fontSize: 24,
+                      ),
+                      textAlign: TextAlign.start,
+                    ),
+                    const SizedBox(height: 15),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          food.price,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w300,
+                            fontSize: 24,
+                          ),
+                          textAlign: TextAlign.start,
                         ),
-                        textAlign: TextAlign.start,
-                      ),
-                      const SizedBox(height: 10),
-                      Text(
-                        food.description,
-                      ),
-                      const SizedBox(height: 10),
-                      const Text(
-                        'Price:',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w800,
-                          fontSize: 24,
-                        ),
-                        textAlign: TextAlign.start,
-                      ),
-                      const SizedBox(height: 15),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            food.price,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 24,
-                            ),
-                            textAlign: TextAlign.start,
-                          ),
-                          Container(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Container(
-                                    height: 30,
-                                    width: 30,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(4),
-                                      color: Colors.blueGrey,
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(4.0),
-                                      child: FittedBox(
-                                        fit: BoxFit.contain,
-                                        child: IconButton(
-                                          icon: Icon(Icons.remove),
-                                          onPressed: () {},
-                                        ),
-                                      ),
-                                    )),
-                                const SizedBox(width: 10),
-                                Text('1'),
-                                const SizedBox(width: 10),
-                                Container(
-                                    height: 30,
-                                    width: 30,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(4),
-                                      color: Colors.blueGrey,
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(4.0),
-                                      child: FittedBox(
-                                        fit: BoxFit.contain,
-                                        child: IconButton(
-                                          icon: Icon(Icons.add),
-                                          onPressed: () {},
-                                        ),
-                                      ),
-                                    )),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      const Spacer(),
-
-                      // Buttons Row
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: Colors.blueGrey, width: 3),
-                                borderRadius: BorderRadius.circular(12),
-                                color: Colors.transparent,
-                              ),
-                              child: const Padding(
-                                padding: EdgeInsets.all(10.0),
-                                child: Center(child: Text('Cancel')),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 20),
-                          Expanded(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: Colors.blueGrey, width: 3),
-                                borderRadius: BorderRadius.circular(12),
-                                color: Colors.blueGrey,
-                              ),
-                              child: const Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.all(10.0),
-                                    child: Center(
-                                      child: Text('Add To Cart'),
-                                    ),
+                        Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Container(
+                                  height: 30,
+                                  width: 30,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(4),
+                                    color: Colors.blueGrey,
                                   ),
-                                  Icon(Icons.add_shopping_cart),
-                                ],
-                              ),
-                            ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: FittedBox(
+                                      fit: BoxFit.contain,
+                                      child: IconButton(
+                                        icon: Icon(Icons.remove),
+                                        onPressed: () {},
+                                      ),
+                                    ),
+                                  )),
+                              const SizedBox(width: 10),
+                              Text('1'),
+                              const SizedBox(width: 10),
+                              Container(
+                                  height: 30,
+                                  width: 30,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(4),
+                                    color: Colors.blueGrey,
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: FittedBox(
+                                      fit: BoxFit.contain,
+                                      child: IconButton(
+                                        icon: Icon(Icons.add),
+                                        onPressed: () {},
+                                      ),
+                                    ),
+                                  )),
+                            ],
                           ),
-                        ],
-                      ),
-                      const Spacer(),
-                    ],
-                  );
-                }).toList(),
-              ),
+                        ),
+                      ],
+                    ),
+                    const Spacer(),
+
+                    // Buttons Row
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            border:
+                                Border.all(color: Colors.blueGrey, width: 3),
+                            borderRadius: BorderRadius.circular(12),
+                            color: Colors.transparent,
+                          ),
+                          child: const Padding(
+                            padding: EdgeInsets.all(10.0),
+                            child: Center(child: Text('Cancel')),
+                          ),
+                        ),
+                        const SizedBox(width: 20),
+                        Container(
+                          decoration: BoxDecoration(
+                            border:
+                                Border.all(color: Colors.blueGrey, width: 3),
+                            borderRadius: BorderRadius.circular(12),
+                            color: Colors.blueGrey,
+                          ),
+                          child: const Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.all(10.0),
+                                child: Center(
+                                  child: Text('Add To Cart'),
+                                ),
+                              ),
+                              Icon(Icons.add_shopping_cart),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    const Spacer(),
+                  ],
+                );
+              }).toList(),
             ),
           ),
         ],

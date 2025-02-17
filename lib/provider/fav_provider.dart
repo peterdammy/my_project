@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_project/model/food_model.dart';
+import 'package:my_project/provider/food_provider.dart';
 
 class FavNotifier extends Notifier<Set<FoodModel>> {
   //initial content
@@ -7,14 +8,15 @@ class FavNotifier extends Notifier<Set<FoodModel>> {
   @override
   Set<FoodModel> build() {
     return {
-      FoodModel(
-          id: '4',
-          title: 'Tradditional Rice',
-          description:
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, ',
-          price: '3300.00',
-          image: 'assets/image4.jpg'),
+      allFoodContent.firstWhere((food) => food.title == 'Traditional Rice'),
+      allFoodContent.firstWhere((food) => food.title == 'Spaghetti Bolognese')
     };
+  }
+
+  void addFood(FoodModel model) {
+    if (!state.contains(model)) {
+      state = {...state, model};
+    }
   }
 }
 
