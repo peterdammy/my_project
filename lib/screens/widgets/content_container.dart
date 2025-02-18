@@ -95,7 +95,11 @@ class _ContentContainerState extends ConsumerState<ContentContainer> {
                   bottom: 0,
                   child: IconButton(
                     icon: const Icon(Icons.favorite, color: Colors.redAccent),
-                    onPressed: () {},
+                    onPressed: () {
+                      ref
+                          .read(favNotifierProvider.notifier)
+                          .removeFood(allFoodContent[index]);
+                    },
                   ),
                 ),
               if (!favContent.contains(allFoodContent[index]))
