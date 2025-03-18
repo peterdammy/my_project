@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:my_project/screens/home_screen.dart';
 
 class ShowbottomSheet extends StatefulWidget {
@@ -38,8 +39,8 @@ class _ShowbottomSheetState extends State<ShowbottomSheet> {
           const Spacer(),
           Text(
             widget.headerText,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
+            style: GoogleFonts.play(
+              fontWeight: FontWeight.w900,
               fontSize: 30,
             ),
           ),
@@ -50,6 +51,11 @@ class _ShowbottomSheetState extends State<ShowbottomSheet> {
               filled: true,
               fillColor: Colors.grey.shade200,
               hintText: widget.eText,
+              hintStyle: GoogleFonts.play(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: Colors.blueGrey,
+              ),
               enabledBorder: const OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.grey),
               ),
@@ -65,6 +71,11 @@ class _ShowbottomSheetState extends State<ShowbottomSheet> {
               filled: true,
               fillColor: Colors.grey.shade200,
               hintText: widget.pText,
+              hintStyle: GoogleFonts.play(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: Colors.blueGrey,
+              ),
               enabledBorder: const OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.grey),
               ),
@@ -77,7 +88,14 @@ class _ShowbottomSheetState extends State<ShowbottomSheet> {
             alignment: Alignment.bottomRight,
             child: TextButton(
               onPressed: () {},
-              child: const Text('Forgot Password?'),
+              child: Text(
+                'Forgot Password?',
+                style: GoogleFonts.play(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14,
+                  color: Colors.blueGrey,
+                ),
+              ),
             ),
           ),
           const SizedBox(height: 10),
@@ -102,9 +120,9 @@ class _ShowbottomSheetState extends State<ShowbottomSheet> {
               },
               child: Text(
                 widget.buttonText,
-                style: const TextStyle(
+                style: GoogleFonts.play(
                   color: Colors.blueGrey,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w700,
                   fontSize: 20,
                 ),
               ),
@@ -114,10 +132,24 @@ class _ShowbottomSheetState extends State<ShowbottomSheet> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(widget.routeText),
+              Text(
+                widget.routeText,
+                style: GoogleFonts.play(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14,
+                  color: Colors.black,
+                ),
+              ),
               TextButton(
                 onPressed: widget.onNextRoutePressed,
-                child: Text(widget.routeTextButton),
+                child: Text(
+                  widget.routeTextButton,
+                  style: GoogleFonts.play(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 14,
+                    color: Colors.blueGrey,
+                  ),
+                ),
               ),
             ],
           ),

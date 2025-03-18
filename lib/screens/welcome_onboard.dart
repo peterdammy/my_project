@@ -1,33 +1,10 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:my_project/screens/widgets/showBottom_Sheet.dart';
 
 class WelcomeOnboard extends StatelessWidget {
   const WelcomeOnboard({super.key});
-
-  void showAuthBottomSheet(BuildContext context, {required bool isLogin}) {
-    showModalBottomSheet(
-      enableDrag: true,
-      context: context,
-      builder: (bottomSheetContext) {
-        return ShowbottomSheet(
-          headerText: isLogin ? 'Login' : 'Sign Up',
-          eText: 'email',
-          pText: 'password',
-          buttonText: isLogin ? 'Login' : 'Sign Up',
-          routeText: isLogin ? 'New Member? ' : 'Already a member? ',
-          routeTextButton: isLogin ? 'Sign Up' : 'Login',
-          onNextRoutePressed: () {
-            // Dismiss the current bottom sheet.
-            Navigator.pop(bottomSheetContext);
-            // Toggle the mode and show the bottom sheet again.
-            // Use the outer context here to avoid issues with the popped context.
-            showAuthBottomSheet(context, isLogin: !isLogin);
-          },
-        );
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,8 +32,8 @@ class WelcomeOnboard extends StatelessWidget {
                     animatedTexts: [
                       TypewriterAnimatedText(
                         'WELCOME \nTO \nFOOD WORLD',
-                        textStyle: const TextStyle(
-                          fontSize: 50.0,
+                        textStyle: GoogleFonts.play(
+                          fontSize: 45.0,
                           fontWeight: FontWeight.bold,
                           color: Colors.blueGrey,
                         ),
@@ -76,10 +53,66 @@ class WelcomeOnboard extends StatelessWidget {
                   children: [
                     TextButton(
                       onPressed: () {
-                        // Start with the login bottom sheet.
-                        showAuthBottomSheet(context, isLogin: true);
+                        // Declare the variables first but assign them later
+                        late void Function() openLoginSheet;
+                        late void Function() openRegisterSheet;
+
+                        // Define login sheet function
+                        openLoginSheet = () {
+                          showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: false,
+                            builder: (context) {
+                              return ShowbottomSheet(
+                                headerText: 'Login',
+                                eText: 'Email',
+                                pText: 'Password',
+                                buttonText: 'Login',
+                                routeText: 'New Member?',
+                                routeTextButton: 'Register',
+                                onNextRoutePressed: () {
+                                  Navigator.pop(context); // Close Login sheet
+                                  openRegisterSheet(); // Open Register sheet
+                                },
+                              );
+                            },
+                          );
+                        };
+
+                        // Define register sheet function
+                        openRegisterSheet = () {
+                          showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: false,
+                            builder: (context) {
+                              return ShowbottomSheet(
+                                headerText: 'Register',
+                                eText: 'Full Name',
+                                pText: 'Create Password',
+                                buttonText: 'Sign Up',
+                                routeText: 'Already a member?',
+                                routeTextButton: 'Login',
+                                onNextRoutePressed: () {
+                                  Navigator.pop(
+                                      context); // Close Register sheet
+                                  openLoginSheet(); // Open Login sheet again
+                                },
+                              );
+                            },
+                          );
+                        };
+
+                        // Initially open the login sheet when button is pressed
+                        openLoginSheet();
                       },
-                      child: const Text("Login/SignUp"),
+                      child: Text(
+                        "Login",
+                        style: GoogleFonts.play(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.blueGrey,
+                        ),
+                      ),
                     ),
                   ],
                 ),
