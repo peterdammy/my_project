@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_project/firebase_options.dart';
 import 'package:my_project/screens/welcome_onboard.dart';
 
@@ -20,15 +21,19 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: '',
-      theme: ThemeData(
-        primaryColor: Colors.grey,
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.grey),
-        useMaterial3: true,
+    return ScreenUtilInit(
+      builder: (context, child) => MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Food World',
+        theme: ThemeData(
+          primaryColor: Colors.grey,
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.grey),
+          useMaterial3: true,
+        ),
+        home: const WelcomeOnboard(),
       ),
-      home: const WelcomeOnboard(),
+      designSize: const Size(390, 844),
+      minTextAdapt: true,
     );
   }
 }

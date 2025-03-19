@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SearchTextfield extends StatelessWidget {
   const SearchTextfield({super.key});
@@ -9,16 +11,25 @@ class SearchTextfield extends StatelessWidget {
       decoration: InputDecoration(
         filled: true,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(20).r,
+          borderSide: const BorderSide(
+            color: Colors.blueGrey,
+            width: 1.1,
+          ),
         ),
-        fillColor: Colors.grey.shade200,
+        fillColor: Colors.grey.shade400,
         hintText: 'Search foods...',
-        suffixIcon: GestureDetector(
+        hintStyle: GoogleFonts.play(
+          fontWeight: FontWeight.w400,
+          fontSize: 14.sp,
+          color: Colors.blueGrey,
+        ),
+        prefixIcon: GestureDetector(
           onTap: () {},
           child: Icon(
             Icons.search,
-            size: 20,
-            color: Colors.black,
+            size: 24.w,
+            color: Colors.blueGrey,
           ),
         ),
 

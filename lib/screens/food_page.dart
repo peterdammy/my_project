@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 import 'package:my_project/provider/fav_provider.dart';
 import 'package:my_project/provider/food_provider.dart';
+import 'package:my_project/provider/star_rating_provider.dart';
+import 'package:my_project/screens/food_content.dart';
 
-import 'package:my_project/screens/widgets/content_container.dart';
 import 'package:my_project/screens/widgets/search_textfield.dart';
 
 class FoodPage extends ConsumerStatefulWidget {
@@ -18,157 +22,252 @@ class _FoodPageState extends ConsumerState<FoodPage> {
   Widget build(BuildContext context) {
     final allFoodContent = ref.watch(foodProvider);
     final favContent = ref.watch(favNotifierProvider).toSet();
-    final foodContentController = PageController(
-      viewportFraction: 0.9,
+    final selectionState = ref.watch(selectionProvider);
+
+    final homepageController = PageController(
       initialPage: 0,
+      viewportFraction: 0.85,
     );
 
     return SafeArea(
       child: Scaffold(
-        resizeToAvoidBottomInset: true,
         backgroundColor: Theme.of(context).primaryColor,
         appBar: AppBar(
+          centerTitle: false,
           backgroundColor: Theme.of(context).primaryColor,
+          automaticallyImplyLeading: false,
           elevation: 0,
-          title: const Text(
-            'Food World',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 24,
+          title: Padding(
+            padding: const EdgeInsets.only(left: 10.0).r,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Welcome To Food World',
+                  style: GoogleFonts.play(
+                    fontSize: 20.sp,
+                    fontWeight: FontWeight.w900,
+                    color: Colors.blueGrey,
+                  ),
+                ),
+                5.verticalSpace,
+                Text(
+                  'Peter Dammy',
+                  style: GoogleFonts.play(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w800,
+                    color: Colors.blueGrey,
+                  ),
+                ),
+              ],
             ),
           ),
           actions: [
-            const CircleAvatar(
-              backgroundImage: AssetImage('assets/image5.jpg'),
-              radius: 18,
-            ),
             IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: const Icon(Icons.logout_rounded),
+              onPressed: () {},
+              icon: Icon(
+                Icons.circle_notifications_outlined,
+                size: 30.h,
+                color: Colors.blueGrey,
+              ),
             ),
           ],
         ),
-        drawer: Drawer(
-          backgroundColor: Theme.of(context).primaryColor,
-        ),
-        body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.0),
-          child: Column(
-            children: [
-              SizedBox(
-                height: 250,
-                child: PageView.builder(
-                  controller: foodContentController,
-                  itemCount: allFoodContent.length,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(right: 8.0),
-                      child: Column(
-                        children: [
-                          Container(
-                            height: 180,
-                            decoration: BoxDecoration(
-                              color: Colors.grey.shade400,
-                              borderRadius: BorderRadius.circular(20),
-                              image: DecorationImage(
-                                image: AssetImage(
-                                  allFoodContent[index].image,
-                                ),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 14),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: ElevatedButton(
-                                  style: ButtonStyle(
-                                    backgroundColor: WidgetStatePropertyAll(
-                                      Colors.blueGrey,
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Divider(
+                  thickness: 1.5.sp,
+                  color: Colors.blueGrey,
+                ),
+                6.verticalSpace,
+                const SearchTextfield(),
+                6.verticalSpace,
+                Divider(
+                  thickness: 1.5.sp,
+                  color: Colors.blueGrey,
+                ),
+                10.verticalSpace,
+                Text(
+                  "This Week Top Picks",
+                  style: GoogleFonts.play(
+                    fontWeight: FontWeight.w800,
+                    fontSize: 20.sp,
+                    color: Colors.blueGrey,
+                  ),
+                ),
+                10.verticalSpace,
+                SizedBox(
+                  height: 280.h,
+                  child: PageView.builder(
+                      controller: homepageController,
+                      itemCount: allFoodContent.length,
+                      padEnds: false,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.only(right: 8.0).w,
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const FoodContent()));
+                            },
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  height: 180.h,
+                                  decoration: BoxDecoration(
+                                    color: Colors.blueGrey,
+                                    borderRadius: BorderRadius.circular(12).r,
+                                    image: DecorationImage(
+                                      image: AssetImage(
+                                          allFoodContent[index].image),
+                                      fit: BoxFit.cover,
                                     ),
                                   ),
-                                  onPressed: () {},
-                                  child: Center(
+                                ),
+                                8.verticalSpace,
+                                SizedBox(
+                                  height: 30,
+                                  child: ElevatedButton(
+                                    onPressed: () {},
                                     child: Text(
                                       allFoodContent[index].title,
-                                      softWrap: false,
-                                      style: TextStyle(
+                                      style: GoogleFonts.play(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 20.sp,
                                         color: Colors.grey,
                                       ),
                                     ),
+                                    style: ButtonStyle(
+                                        backgroundColor: WidgetStatePropertyAll(
+                                      Colors.blueGrey,
+                                    )),
+                                  ),
+                                ),
+                                8.verticalSpace,
+                                SizedBox(
+                                  height: 30,
+                                  child: ElevatedButton(
+                                    onPressed: () {},
+                                    style: const ButtonStyle(
+                                      backgroundColor: WidgetStatePropertyAll(
+                                        Colors.blueGrey,
+                                      ),
+                                    ),
+                                    child: Text(
+                                      allFoodContent[index].price,
+                                      style: GoogleFonts.play(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 16.sp,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      }),
+                ),
+                6.verticalSpace,
+                Divider(
+                  thickness: 1.5.sp,
+                  color: Colors.blueGrey,
+                ),
+                Text(
+                  "Our Regulars'",
+                  style: GoogleFonts.play(
+                    fontWeight: FontWeight.w800,
+                    fontSize: 20,
+                    color: Colors.blueGrey,
+                  ),
+                ),
+                10.verticalSpace,
+                Container(
+                  height: 200.h,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16).r,
+                  ),
+                  clipBehavior: Clip.hardEdge,
+                  child: ListView.separated(
+                    shrinkWrap: true,
+                    separatorBuilder: (context, index) => Divider(
+                      thickness: 1.5.sp,
+                      color: Colors.blueGrey,
+                    ),
+                    itemCount: allFoodContent.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        decoration: BoxDecoration(
+                          color: Colors.blueGrey,
+                        ),
+                        child: ListTile(
+                          leading: CircleAvatar(
+                            radius: 20.r,
+                            backgroundImage: AssetImage(
+                              allFoodContent[index].image,
+                            ),
+                          ),
+                          title: Text(
+                            allFoodContent[index].title,
+                            style: GoogleFonts.play(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 20.sp,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          subtitle: Text(
+                            allFoodContent[index].title,
+                            style: GoogleFonts.play(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 14.sp,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  ref
+                                      .read(selectionProvider.notifier)
+                                      .toggleSelection(index);
+                                },
+                                child: SizedBox(
+                                  height: 14.h,
+                                  child: Image.asset(
+                                    selectionState[index] == true
+                                        ? 'assets/star_rated.png'
+                                        : 'assets/star_unrated.png',
                                   ),
                                 ),
                               ),
-                              if (favContent.contains(allFoodContent[index]))
-                                GestureDetector(
-                                  onTap: () {
-                                    ref
-                                        .read(favNotifierProvider.notifier)
-                                        .removeFood(allFoodContent[index]);
-                                  },
-                                  child: Container(
-                                    height: 40,
-                                    width: 40,
-                                    decoration: BoxDecoration(
-                                      color: Colors.blueGrey,
-                                      border: Border.all(
-                                        color: Colors.black,
-                                        width: 1.1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    child: Icon(
-                                      Icons.task_alt,
-                                      size: 16,
-                                      color: Colors.black,
-                                    ),
-                                  ),
+                              4.horizontalSpace,
+                              Text(
+                                '5.0',
+                                style: GoogleFonts.play(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.grey,
                                 ),
-                              if (!favContent.contains(allFoodContent[index]))
-                                GestureDetector(
-                                  onTap: () {
-                                    ref
-                                        .read(favNotifierProvider.notifier)
-                                        .removeFood(allFoodContent[index]);
-                                  },
-                                  child: Container(
-                                    height: 40,
-                                    width: 40,
-                                    decoration: BoxDecoration(
-                                      color: Colors.blueGrey,
-                                      border: Border.all(
-                                        color: Colors.grey,
-                                        width: 1.1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(5.0),
-                                      child: Icon(
-                                        Icons.add,
-                                        size: 16,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                              ),
                             ],
-                          )
-                        ],
-                      ),
-                    );
-                  },
+                          ),
+                        ),
+                      );
+                    },
+                  ),
                 ),
-              ),
-              // Expanded(child: ContentContainer()),
-            ],
+              ],
+            ),
           ),
         ),
       ),
