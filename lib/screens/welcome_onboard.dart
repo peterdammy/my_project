@@ -74,6 +74,7 @@ class WelcomeOnboard extends StatelessWidget {
                                   Navigator.pop(context); // Close Login sheet
                                   openRegisterSheet(); // Open Register sheet
                                 },
+                                optionText: 'Or Sign In with',
                               );
                             },
                           );
@@ -97,6 +98,7 @@ class WelcomeOnboard extends StatelessWidget {
                                       context); // Close Register sheet
                                   openLoginSheet(); // Open Login sheet again
                                 },
+                                optionText: 'Or Register with',
                               );
                             },
                           );

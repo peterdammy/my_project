@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_project/main.dart';
+
 import 'package:my_project/screens/favorite_page.dart';
 import 'package:my_project/screens/food_page.dart';
 import 'package:my_project/screens/profile_screen.dart';

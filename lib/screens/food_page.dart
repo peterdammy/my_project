@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:my_project/provider/fav_provider.dart';
 import 'package:my_project/provider/food_provider.dart';
-import 'package:my_project/provider/star_rating_provider.dart';
+
 import 'package:my_project/screens/food_content.dart';
 
 import 'package:my_project/screens/widgets/search_textfield.dart';
@@ -22,7 +22,6 @@ class _FoodPageState extends ConsumerState<FoodPage> {
   Widget build(BuildContext context) {
     final allFoodContent = ref.watch(foodProvider);
     final favContent = ref.watch(favNotifierProvider).toSet();
-    final selectionState = ref.watch(selectionProvider);
 
     final homepageController = PageController(
       initialPage: 0,
@@ -111,11 +110,14 @@ class _FoodPageState extends ConsumerState<FoodPage> {
                           padding: const EdgeInsets.only(right: 8.0).w,
                           child: GestureDetector(
                             onTap: () {
+                              final contentDetail =
+                                  ref.read(foodProvider)[index];
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          const FoodContent()));
+                                      builder: (context) => FoodContent(
+                                            contentDetail: contentDetail,
+                                          )));
                             },
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -192,7 +194,7 @@ class _FoodPageState extends ConsumerState<FoodPage> {
                 ),
                 10.verticalSpace,
                 Container(
-                  height: 200.h,
+                  height: 300.h,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(16).r,
                   ),
@@ -231,35 +233,6 @@ class _FoodPageState extends ConsumerState<FoodPage> {
                               fontSize: 14.sp,
                               color: Colors.grey,
                             ),
-                          ),
-                          trailing: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  ref
-                                      .read(selectionProvider.notifier)
-                                      .toggleSelection(index);
-                                },
-                                child: SizedBox(
-                                  height: 14.h,
-                                  child: Image.asset(
-                                    selectionState[index] == true
-                                        ? 'assets/star_rated.png'
-                                        : 'assets/star_unrated.png',
-                                  ),
-                                ),
-                              ),
-                              4.horizontalSpace,
-                              Text(
-                                '5.0',
-                                style: GoogleFonts.play(
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                            ],
                           ),
                         ),
                       );
