@@ -13,6 +13,92 @@ class FoodContent extends ConsumerWidget {
     required this.contentDetail,
   });
 
+  void _showAlertDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.blueGrey,
+          title: Text(
+            "Proceed To Pay",
+            style: GoogleFonts.play(
+              fontWeight: FontWeight.w800,
+              fontSize: 20.sp,
+              color: Colors.black,
+            ),
+          ),
+          content: const Text("This is an alert dialog."),
+          actions: [
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    // width: 100,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16).r,
+                      border: Border.all(
+                        color: Colors.black54,
+                        width: 1.5,
+                      ),
+                    ),
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: WidgetStatePropertyAll(
+                          Theme.of(context).primaryColor,
+                        ),
+                      ),
+                      onPressed: () {},
+                      child: Text(
+                        'Okay',
+                        style: GoogleFonts.play(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16.sp,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ),
+                  14.horizontalSpace,
+                  Container(
+                    // width: 100,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16).r,
+                      border: Border.all(
+                        color: Colors.black54,
+                        width: 1.5,
+                      ),
+                    ),
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: WidgetStatePropertyAll(
+                          Theme.of(context).primaryColor,
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text(
+                        'Cancel',
+                        style: GoogleFonts.play(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16.sp,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final productCounter = ref.watch(productCounterProvider);
@@ -243,7 +329,7 @@ class FoodContent extends ConsumerWidget {
                                 Colors.blueGrey,
                               ),
                             ),
-                            onPressed: () {},
+                            onPressed: () => _showAlertDialog(context),
                             child: Text(
                               'Buy Now',
                               style: GoogleFonts.play(
