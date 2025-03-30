@@ -21,7 +21,7 @@ class _FoodPageState extends ConsumerState<FoodPage> {
   @override
   Widget build(BuildContext context) {
     final allFoodContent = ref.watch(foodProvider);
-    final favContent = ref.watch(favNotifierProvider).toSet();
+    final favContent = ref.watch(favNotifierProvider);
 
     final homepageController = PageController(
       initialPage: 0,
@@ -108,21 +108,21 @@ class _FoodPageState extends ConsumerState<FoodPage> {
                       itemBuilder: (context, index) {
                         return Padding(
                           padding: const EdgeInsets.only(right: 8.0).w,
-                          child: GestureDetector(
-                            onTap: () {
-                              final contentDetail =
-                                  ref.read(foodProvider)[index];
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => FoodContent(
-                                            contentDetail: contentDetail,
-                                          )));
-                            },
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  final contentDetail =
+                                      ref.read(foodProvider)[index];
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => FoodContent(
+                                                contentDetail: contentDetail,
+                                              )));
+                                },
+                                child: Container(
                                   height: 180.h,
                                   decoration: BoxDecoration(
                                     color: Colors.blueGrey,
@@ -134,47 +134,112 @@ class _FoodPageState extends ConsumerState<FoodPage> {
                                     ),
                                   ),
                                 ),
-                                8.verticalSpace,
-                                SizedBox(
-                                  height: 30,
-                                  child: ElevatedButton(
-                                    onPressed: () {},
-                                    child: Text(
-                                      allFoodContent[index].title,
-                                      style: GoogleFonts.play(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 20.sp,
-                                        color: Colors.grey,
-                                      ),
+                              ),
+                              8.verticalSpace,
+                              SizedBox(
+                                height: 30,
+                                child: ElevatedButton(
+                                  onPressed: () {},
+                                  child: Text(
+                                    allFoodContent[index].title,
+                                    style: GoogleFonts.play(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 20.sp,
+                                      color: Colors.grey,
                                     ),
-                                    style: ButtonStyle(
-                                        backgroundColor: WidgetStatePropertyAll(
-                                      Colors.blueGrey,
-                                    )),
                                   ),
-                                ),
-                                8.verticalSpace,
-                                SizedBox(
-                                  height: 30,
-                                  child: ElevatedButton(
-                                    onPressed: () {},
-                                    style: const ButtonStyle(
+                                  style: ButtonStyle(
                                       backgroundColor: WidgetStatePropertyAll(
-                                        Colors.blueGrey,
-                                      ),
-                                    ),
-                                    child: Text(
-                                      allFoodContent[index].price,
-                                      style: GoogleFonts.play(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 16.sp,
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                  ),
+                                    Colors.blueGrey,
+                                  )),
                                 ),
-                              ],
-                            ),
+                              ),
+                              8.verticalSpace,
+                              SizedBox(
+                                width: 300.w,
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    SizedBox(
+                                      height: 30,
+                                      child: ElevatedButton(
+                                        onPressed: () {},
+                                        style: const ButtonStyle(
+                                          backgroundColor:
+                                              WidgetStatePropertyAll(
+                                            Colors.blueGrey,
+                                          ),
+                                        ),
+                                        child: Text(
+                                          allFoodContent[index].price,
+                                          style: GoogleFonts.play(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 16.sp,
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    if (!favContent
+                                        .contains(allFoodContent[index]))
+                                      GestureDetector(
+                                        onTap: () {
+                                          ref
+                                              .read(
+                                                  favNotifierProvider.notifier)
+                                              .addFood(allFoodContent[index]);
+                                        },
+                                        child: Container(
+                                          height: 30.h,
+                                          width: 30.w,
+                                          decoration: BoxDecoration(
+                                            color: Colors.blueGrey,
+                                            borderRadius:
+                                                BorderRadius.circular(30).r,
+                                          ),
+                                          child: Center(
+                                            child: Icon(
+                                              Icons.add,
+                                              size: 16.sp,
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    else
+                                      GestureDetector(
+                                        onTap: () {
+                                          ref
+                                              .read(
+                                                  favNotifierProvider.notifier)
+                                              .removeFood(
+                                                  allFoodContent[index]);
+                                        },
+                                        child: Container(
+                                          height: 30.h,
+                                          width: 30.w,
+                                          decoration: BoxDecoration(
+                                            color: Colors.blueGrey,
+                                            borderRadius:
+                                                BorderRadius.circular(30).r,
+                                          ),
+                                          child: Center(
+                                            child: Icon(
+                                              Icons.remove,
+                                              size: 16.sp,
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                         );
                       }),

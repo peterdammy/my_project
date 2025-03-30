@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'package:my_project/provider/fav_provider.dart';
 
@@ -13,7 +15,7 @@ class FavoritePage extends ConsumerStatefulWidget {
 class _FavoritePageState extends ConsumerState<FavoritePage> {
   @override
   Widget build(BuildContext context) {
-    final favContent = ref.watch(favNotifierProvider);
+    final favContent = ref.watch(favNotifierProvider); // Listen for updates
 
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
@@ -29,38 +31,46 @@ class _FavoritePageState extends ConsumerState<FavoritePage> {
         ),
         actions: [
           IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: const Icon(Icons.logout_rounded))
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.logout_rounded),
+          ),
         ],
       ),
-      drawer: Drawer(
-        backgroundColor: Theme.of(context).primaryColor,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(14.0),
-        child: ListView.builder(
-            itemCount: favContent.length, // Use the correct length
-            itemBuilder: (context, index) {
-              final favList = favContent.toList(); // Convert Set to List
-              return Card(
-                color: Colors.blueGrey,
-                child: ListTile(
-                  leading: CircleAvatar(
-                    radius: 24,
-                    backgroundImage: AssetImage(favList[index].image), // FIXED
-                  ),
-                  title: Text(favList[index].title), // Get title
-                  subtitle: Text('#${favList[index].price}'), // Get price
-                  trailing: IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.arrow_forward_ios),
-                  ),
+      body: favContent.isEmpty
+          ? Center(
+              child: Text(
+                "Your cart is empty!",
+                style: GoogleFonts.play(
+                  fontWeight: FontWeight.w800,
+                  fontSize: 20.sp,
+                  color: Colors.grey,
                 ),
-              );
-            }),
-      ),
+              ),
+            )
+          : ListView.builder(
+              padding: const EdgeInsets.all(16).r,
+              itemCount: favContent.length,
+              itemBuilder: (context, index) {
+                final food = favContent.elementAt(index); // Convert Set to List
+                return ListTile(
+                  leading: Image.asset(
+                    food.image,
+                    width: 50,
+                    height: 50,
+                  ),
+                  title: Text(food.title),
+                  subtitle: Text('#${food.price}'),
+                  trailing: IconButton(
+                    icon: Icon(Icons.remove_circle_outline, color: Colors.red),
+                    onPressed: () {
+                      ref.read(favNotifierProvider.notifier).removeFood(food);
+                    },
+                  ),
+                );
+              },
+            ),
     );
   }
 }

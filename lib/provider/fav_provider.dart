@@ -2,17 +2,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_project/model/food_model.dart';
 
 class FavNotifier extends Notifier<Set<FoodModel>> {
-  //initial content
-
   @override
   Set<FoodModel> build() {
-    return {
-      // allFoodContent.firstWhere((food) => food.title == 'Traditional Rice'),
-      // allFoodContent.firstWhere((food) => food.title == 'Spaghetti Bolognese')
-    };
+    return {}; // Initialize as an empty set
   }
-
-//update state
 
   void addFood(FoodModel model) {
     if (!state.contains(model)) {
