@@ -13,6 +13,42 @@ class FavoritePage extends ConsumerStatefulWidget {
 }
 
 class _FavoritePageState extends ConsumerState<FavoritePage> {
+  /// Function to show delete confirmation dialog
+  void _showDeleteConfirmationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Clear Cart"),
+          content: const Text(
+              "Are you sure you want to remove all items from your cart?"),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16), // Rounded edges
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // Close the dialog
+              },
+              child: const Text("Cancel",
+                  style: TextStyle(color: Colors.blueGrey)),
+            ),
+            TextButton(
+              onPressed: () {
+                ref
+                    .read(favNotifierProvider.notifier)
+                    .clearCart(); // Clear all items
+                Navigator.pop(context); // Close the dialog
+              },
+              child: const Text("Yes, Remove",
+                  style: TextStyle(color: Colors.red)),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final favContent = ref.watch(favNotifierProvider); // Listen for updates
@@ -22,19 +58,22 @@ class _FavoritePageState extends ConsumerState<FavoritePage> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
         elevation: 0,
-        title: const Text(
+        automaticallyImplyLeading: false,
+        title: Text(
           'Cart',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 24,
+          style: GoogleFonts.play(
+            fontSize: 20.sp,
+            fontWeight: FontWeight.w900,
+            color: Colors.blueGrey,
           ),
         ),
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.pop(context);
+              _showDeleteConfirmationDialog(context); // Show alert dialog
             },
-            icon: const Icon(Icons.logout_rounded),
+            icon: const Icon(Icons.delete_outlined,
+                color: Colors.red), // Change icon to delete
           ),
         ],
       ),
@@ -44,8 +83,8 @@ class _FavoritePageState extends ConsumerState<FavoritePage> {
                 "Your cart is empty!",
                 style: GoogleFonts.play(
                   fontWeight: FontWeight.w800,
-                  fontSize: 20.sp,
-                  color: Colors.grey,
+                  fontSize: 24.sp,
+                  color: Colors.black,
                 ),
               ),
             )
@@ -55,17 +94,40 @@ class _FavoritePageState extends ConsumerState<FavoritePage> {
               itemBuilder: (context, index) {
                 final food = favContent.elementAt(index); // Convert Set to List
                 return ListTile(
-                  leading: Image.asset(
-                    food.image,
-                    width: 50,
-                    height: 50,
+                  leading: CircleAvatar(
+                    radius: 25.r,
+                    backgroundImage: AssetImage(food.image),
                   ),
                   title: Text(food.title),
                   subtitle: Text('#${food.price}'),
                   trailing: IconButton(
-                    icon: Icon(Icons.remove_circle_outline, color: Colors.red),
+                    icon: Icon(Icons.remove_circle_outline,
+                        color: Colors.blueGrey),
                     onPressed: () {
                       ref.read(favNotifierProvider.notifier).removeFood(food);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          elevation: 1.5,
+                          content: Text(
+                            'Removed To Favorites',
+                            style: GoogleFonts.play(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16.sp,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          duration: Duration(seconds: 2),
+                          backgroundColor: Colors.blueGrey,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20).r,
+                          ),
+                          behavior: SnackBarBehavior.floating,
+                          margin: EdgeInsets.symmetric(
+                              horizontal: 50.w, vertical: 20.h),
+                          padding: EdgeInsets.symmetric(
+                              vertical: 8.h, horizontal: 16.w),
+                        ),
+                      );
                     },
                   ),
                 );

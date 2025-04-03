@@ -1,9 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_project/repository/auth_service.dart';
 import 'package:my_project/screens/home_screen.dart';
 
-class ShowbottomSheet extends StatefulWidget {
+class ShowbottomSheet extends ConsumerStatefulWidget {
   final String headerText;
   final String eText;
   final String pText;
@@ -26,10 +29,10 @@ class ShowbottomSheet extends StatefulWidget {
   });
 
   @override
-  State<ShowbottomSheet> createState() => _ShowbottomSheetState();
+  ConsumerState<ShowbottomSheet> createState() => _ShowbottomSheetState();
 }
 
-class _ShowbottomSheetState extends State<ShowbottomSheet> {
+class _ShowbottomSheetState extends ConsumerState<ShowbottomSheet> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   @override
@@ -144,12 +147,55 @@ class _ShowbottomSheetState extends State<ShowbottomSheet> {
           Align(
             alignment: Alignment.center,
             child: GestureDetector(
-              onTap: () {},
+              onTap: () async {
+                await ref.read(authServiceProvider).signInWithGoogle();
+
+                final user = FirebaseAuth.instance.currentUser;
+
+                if (user != null) {
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        "Login Successful!",
+                        style: GoogleFonts.play(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.white,
+                        ),
+                      ),
+                      backgroundColor: Colors.green,
+                    ),
+                  );
+
+                  // Navigate to HomeScreen
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => const HomeScreen()),
+                  );
+                }
+                // } else {
+                //   ScaffoldMessenger.of(context).showSnackBar(
+                //     SnackBar(
+                //       content: Text(
+                //         "Google Sign-In failed. Please try again.",
+                //         style: GoogleFonts.play(
+                //           fontSize: 14,
+                //           fontWeight: FontWeight.w400,
+                //           color: Colors.white,
+                //         ),
+                //       ),
+                //       backgroundColor: Colors.red,
+                //     ),
+                //   );
+                // }
+              },
               child: Container(
-                height: 34,
-                width: 34,
+                height: 34.h,
+                width: 34.w,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(34).r,
+                  shape: BoxShape.circle,
+                  // borderRadius: BorderRadius.circular(34).r,
                   image: const DecorationImage(
                     image: AssetImage('assets/googlen.png'),
                     fit: BoxFit.cover,

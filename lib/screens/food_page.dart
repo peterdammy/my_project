@@ -5,8 +5,10 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:my_project/provider/fav_provider.dart';
 import 'package:my_project/provider/food_provider.dart';
+import 'package:my_project/repository/auth_service.dart';
 
 import 'package:my_project/screens/food_content.dart';
+import 'package:my_project/screens/welcome_onboard.dart';
 
 import 'package:my_project/screens/widgets/search_textfield.dart';
 
@@ -62,13 +64,33 @@ class _FoodPageState extends ConsumerState<FoodPage> {
             ),
           ),
           actions: [
-            IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.circle_notifications_outlined,
-                size: 30.h,
-                color: Colors.blueGrey,
-              ),
+            Row(
+              children: [
+                IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.circle_notifications_outlined,
+                    size: 30.h,
+                    color: Colors.blueGrey,
+                  ),
+                ),
+                5.horizontalSpace,
+                IconButton(
+                  onPressed: () {
+                    ref.read(authServiceProvider).signOut();
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const WelcomeOnboard()),
+                    );
+                  },
+                  icon: Icon(
+                    Icons.logout,
+                    size: 30.h,
+                    color: Colors.blueGrey,
+                  ),
+                ),
+              ],
             ),
           ],
         ),
@@ -190,6 +212,35 @@ class _FoodPageState extends ConsumerState<FoodPage> {
                                               .read(
                                                   favNotifierProvider.notifier)
                                               .addFood(allFoodContent[index]);
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              elevation: 1.5,
+                                              content: Text(
+                                                'Added To Favorites',
+                                                style: GoogleFonts.play(
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 16.sp,
+                                                  color: Colors.grey,
+                                                ),
+                                              ),
+                                              duration: Duration(seconds: 2),
+                                              backgroundColor:
+                                                  Colors.grey.shade800,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(20).r,
+                                              ),
+                                              behavior:
+                                                  SnackBarBehavior.floating,
+                                              margin: EdgeInsets.symmetric(
+                                                  horizontal: 50.w,
+                                                  vertical: 20.h),
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 8.h,
+                                                  horizontal: 16.w),
+                                            ),
+                                          );
                                         },
                                         child: Container(
                                           height: 30.h,
@@ -217,6 +268,35 @@ class _FoodPageState extends ConsumerState<FoodPage> {
                                                   favNotifierProvider.notifier)
                                               .removeFood(
                                                   allFoodContent[index]);
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              elevation: 1.5,
+                                              content: Text(
+                                                'Removed To Favorites',
+                                                style: GoogleFonts.play(
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 16.sp,
+                                                  color: Colors.grey,
+                                                ),
+                                              ),
+                                              duration: Duration(seconds: 2),
+                                              backgroundColor:
+                                                  Colors.grey.shade800,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(20).r,
+                                              ),
+                                              behavior:
+                                                  SnackBarBehavior.floating,
+                                              margin: EdgeInsets.symmetric(
+                                                  horizontal: 50.w,
+                                                  vertical: 20.h),
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 8.h,
+                                                  horizontal: 16.w),
+                                            ),
+                                          );
                                         },
                                         child: Container(
                                           height: 30.h,
@@ -276,27 +356,42 @@ class _FoodPageState extends ConsumerState<FoodPage> {
                         decoration: BoxDecoration(
                           color: Colors.blueGrey,
                         ),
-                        child: ListTile(
-                          leading: CircleAvatar(
-                            radius: 20.r,
-                            backgroundImage: AssetImage(
-                              allFoodContent[index].image,
+                        child: GestureDetector(
+                          onTap: () {
+                            final contentDetail = ref.read(foodProvider)[index];
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => FoodContent(
+                                          contentDetail: contentDetail,
+                                        )));
+                          },
+                          child: ListTile(
+                            leading: CircleAvatar(
+                              radius: 20.r,
+                              backgroundImage: AssetImage(
+                                allFoodContent[index].image,
+                              ),
                             ),
-                          ),
-                          title: Text(
-                            allFoodContent[index].title,
-                            style: GoogleFonts.play(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 20.sp,
-                              color: Colors.grey,
+                            title: Text(
+                              allFoodContent[index].title,
+                              style: GoogleFonts.play(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 20.sp,
+                                color: Colors.grey,
+                              ),
                             ),
-                          ),
-                          subtitle: Text(
-                            allFoodContent[index].title,
-                            style: GoogleFonts.play(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14.sp,
-                              color: Colors.grey,
+                            subtitle: Text(
+                              allFoodContent[index].title,
+                              style: GoogleFonts.play(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14.sp,
+                                color: Colors.grey,
+                              ),
+                            ),
+                            trailing: Icon(
+                              Icons.arrow_forward_ios,
+                              color: Theme.of(context).primaryColor,
                             ),
                           ),
                         ),

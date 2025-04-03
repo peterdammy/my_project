@@ -1,8 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_project/firebase_options.dart';
+import 'package:my_project/screens/food_page.dart';
+import 'package:my_project/screens/home_screen.dart';
 import 'package:my_project/screens/welcome_onboard.dart';
 
 void main() async {
@@ -15,12 +18,12 @@ void main() async {
   runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return ScreenUtilInit(
       builder: (context, child) => MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -30,7 +33,14 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.grey),
           useMaterial3: true,
         ),
-        home: const WelcomeOnboard(),
+        home: StreamBuilder(
+            stream: FirebaseAuth.instance.authStateChanges(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return const WelcomeOnboard();
+              }
+              return const HomeScreen();
+            }),
       ),
       designSize: const Size(390, 844),
       minTextAdapt: true,
