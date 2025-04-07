@@ -1,6 +1,7 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_project/screens/auth_page.dart';
 import 'package:my_project/screens/widgets/showBottom_Sheet.dart';
 
 class WelcomeOnboard extends StatelessWidget {
@@ -53,59 +54,63 @@ class WelcomeOnboard extends StatelessWidget {
                   children: [
                     TextButton(
                       onPressed: () {
-                        // Declare the variables first but assign them later
-                        late void Function() openLoginSheet;
-                        late void Function() openRegisterSheet;
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return const AuthPage();
+                        }));
+                        // // Declare the variables first but assign them later
+                        // late void Function() openLoginSheet;
+                        // late void Function() openRegisterSheet;
 
-                        // Define login sheet function
-                        openLoginSheet = () {
-                          showModalBottomSheet(
-                            context: context,
-                            isScrollControlled: false,
-                            builder: (context) {
-                              return ShowbottomSheet(
-                                headerText: 'Login',
-                                eText: 'Email',
-                                pText: 'Password',
-                                buttonText: 'Login',
-                                routeText: 'New Member?',
-                                routeTextButton: 'Register',
-                                onNextRoutePressed: () {
-                                  Navigator.pop(context); // Close Login sheet
-                                  openRegisterSheet(); // Open Register sheet
-                                },
-                                optionText: 'Or Sign In with',
-                              );
-                            },
-                          );
-                        };
+                        // // Define login sheet function
+                        // openLoginSheet = () {
+                        //   showModalBottomSheet(
+                        //     context: context,
+                        //     isScrollControlled: false,
+                        //     builder: (context) {
+                        //       return ShowbottomSheet(
+                        //         headerText: 'Login',
+                        //         eText: 'Email',
+                        //         pText: 'Password',
+                        //         buttonText: 'Login',
+                        //         routeText: 'New Member?',
+                        //         routeTextButton: 'Register',
+                        //         onNextRoutePressed: () {
+                        //           Navigator.pop(context); // Close Login sheet
+                        //           openRegisterSheet(); // Open Register sheet
+                        //         },
+                        //         optionText: 'Or Sign In with',
+                        //       );
+                        //     },
+                        //   );
+                        // };
 
-                        // Define register sheet function
-                        openRegisterSheet = () {
-                          showModalBottomSheet(
-                            context: context,
-                            isScrollControlled: false,
-                            builder: (context) {
-                              return ShowbottomSheet(
-                                headerText: 'Register',
-                                eText: 'Full Name',
-                                pText: 'Create Password',
-                                buttonText: 'Sign Up',
-                                routeText: 'Already a member?',
-                                routeTextButton: 'Login',
-                                onNextRoutePressed: () {
-                                  Navigator.pop(
-                                      context); // Close Register sheet
-                                  openLoginSheet(); // Open Login sheet again
-                                },
-                                optionText: 'Or Register with',
-                              );
-                            },
-                          );
-                        };
+                        // // Define register sheet function
+                        // openRegisterSheet = () {
+                        //   showModalBottomSheet(
+                        //     context: context,
+                        //     isScrollControlled: false,
+                        //     builder: (context) {
+                        //       return ShowbottomSheet(
+                        //         headerText: 'Register',
+                        //         eText: 'Full Name',
+                        //         pText: 'Create Password',
+                        //         buttonText: 'Sign Up',
+                        //         routeText: 'Already a member?',
+                        //         routeTextButton: 'Login',
+                        //         onNextRoutePressed: () {
+                        //           Navigator.pop(
+                        //               context); // Close Register sheet
+                        //           openLoginSheet(); // Open Login sheet again
+                        //         },
+                        //         optionText: 'Or Register with',
+                        //       );
+                        //     },
+                        //   );
+                        // };
 
-                        // Initially open the login sheet when button is pressed
-                        openLoginSheet();
+                        // // Initially open the login sheet when button is pressed
+                        // openLoginSheet();
                       },
                       child: Text(
                         "Login",

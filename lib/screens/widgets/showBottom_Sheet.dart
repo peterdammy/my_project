@@ -148,12 +148,16 @@ class _ShowbottomSheetState extends ConsumerState<ShowbottomSheet> {
             alignment: Alignment.center,
             child: GestureDetector(
               onTap: () async {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return Center(child: CircularProgressIndicator());
+                    });
                 await ref.read(authServiceProvider).signInWithGoogle();
 
                 final user = FirebaseAuth.instance.currentUser;
 
                 if (user != null) {
-                  Navigator.pop(context);
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(
@@ -189,6 +193,7 @@ class _ShowbottomSheetState extends ConsumerState<ShowbottomSheet> {
                 //     ),
                 //   );
                 // }
+                Navigator.pop(context);
               },
               child: Container(
                 height: 34.h,

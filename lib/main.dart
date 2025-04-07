@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_project/firebase_options.dart';
-import 'package:my_project/screens/food_page.dart';
 import 'package:my_project/screens/home_screen.dart';
 import 'package:my_project/screens/welcome_onboard.dart';
 
