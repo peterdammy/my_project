@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_project/repository/auth_service.dart';
 import 'package:my_project/screens/auth_page.dart';
 import 'package:my_project/screens/home_screen.dart';
+import 'package:my_project/screens/set_username_page.dart';
 
 class SignUpPage extends ConsumerStatefulWidget {
   const SignUpPage({super.key});
@@ -28,7 +29,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0).r,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -183,7 +184,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const HomeScreen()),
+                              builder: (context) => const SetUsernamePage()),
                         );
                       } else {
                         // Show specific error message
@@ -232,7 +233,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const HomeScreen()),
+                              builder: (context) => const SetUsernamePage()),
                         );
                       } else {
                         // Sign-in failed or canceled
@@ -270,9 +271,9 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                                 ),
                               ),
                             ),
-                            50.horizontalSpace,
+                            20.horizontalSpace,
                             Text(
-                              'Google',
+                              'Sign In With Google',
                               style: GoogleFonts.play(
                                 color: Colors.blueGrey,
                                 fontWeight: FontWeight.w700,
@@ -287,6 +288,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                 ),
               ],
             ),
+            80.verticalSpace,
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

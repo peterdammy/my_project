@@ -24,7 +24,7 @@ class _AuthPageState extends ConsumerState<AuthPage> {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0).r,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -112,6 +112,12 @@ class _AuthPageState extends ConsumerState<AuthPage> {
                     onPressed: () async {
                       final email = emailController.text.trim();
                       final password = passwordController.text;
+
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Center(child: CircularProgressIndicator());
+                          });
 
                       // Check if empty
                       if (email.isEmpty || password.isEmpty) {
@@ -216,9 +222,9 @@ class _AuthPageState extends ConsumerState<AuthPage> {
                                 ),
                               ),
                             ),
-                            50.horizontalSpace,
+                            20.horizontalSpace,
                             Text(
-                              'Google',
+                              'Sign In With Google',
                               style: GoogleFonts.play(
                                 color: Colors.blueGrey,
                                 fontWeight: FontWeight.w700,
@@ -233,6 +239,7 @@ class _AuthPageState extends ConsumerState<AuthPage> {
                 ),
               ],
             ),
+            80.verticalSpace,
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
