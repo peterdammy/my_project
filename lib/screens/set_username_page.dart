@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+final formKey = GlobalKey<FormState>();
 
 class SetUsernamePage extends StatefulWidget {
   const SetUsernamePage({super.key});
@@ -11,6 +14,12 @@ class SetUsernamePage extends StatefulWidget {
 
 class _SetUsernamePageState extends State<SetUsernamePage> {
   final usernameController = TextEditingController();
+
+  void validateUsernamae() async {
+    final userMap = await FirebaseFirestore.instance.collection("Users").get();
+    final users = userMap.docs.map((user) => user).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,26 +40,29 @@ class _SetUsernamePageState extends State<SetUsernamePage> {
                 ),
               ),
               30.verticalSpace,
-              TextField(
-                controller: usernameController,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.grey.shade400,
-                  suffixIcon: Icon(Icons.verified),
-                  suffixIconColor: Colors.green,
-                  hintText: 'Enter your username',
-                  hintStyle: GoogleFonts.play(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.blueGrey,
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blueGrey),
-                    borderRadius: BorderRadius.circular(16).r,
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blueGrey),
-                    borderRadius: BorderRadius.circular(16).r,
+              Form(
+                child: TextField(
+                  key: formKey,
+                  controller: usernameController,
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.grey.shade400,
+                    suffixIcon: Icon(Icons.verified),
+                    suffixIconColor: Colors.green,
+                    hintText: 'Enter your username',
+                    hintStyle: GoogleFonts.play(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.blueGrey,
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blueGrey),
+                      borderRadius: BorderRadius.circular(16).r,
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blueGrey),
+                      borderRadius: BorderRadius.circular(16).r,
+                    ),
                   ),
                 ),
               ),
