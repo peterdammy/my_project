@@ -184,7 +184,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const SetUsernamePage()),
+                              builder: (context) => const HomeScreen()),
                         );
                       } else {
                         // Show specific error message
@@ -233,7 +233,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const SetUsernamePage()),
+                              builder: (context) => const HomeScreen()),
                         );
                       } else {
                         // Sign-in failed or canceled
